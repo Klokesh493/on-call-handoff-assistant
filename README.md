@@ -18,4 +18,16 @@ Run `make verify` with Make and Python 3 installed. The target runs the document
 
 ## Project walkthrough
 
+```mermaid
+flowchart LR
+    A["Incident export JSON"]
+    B["Drop resolved incidents and sort by priority and ID"]
+    C{"Owner present?"}
+    D["Keep named owner"]
+    E["Mark unassigned"]
+    A --> B --> C
+    C -->|Yes| D
+    C -->|No| E
+```
+
 [Architecture and data flow](docs/ARCHITECTURE.md) · [Business problem, demo, and verification](docs/CASE_STUDY.md)

@@ -4,11 +4,14 @@ Build a priority-ordered handoff list from an exported incident list. Resolved i
 
 ```mermaid
 flowchart LR
-    N0["example.json"]
-    N1["assistant.py"]
-    N2["Exclude resolved incidents, sort active incidents by priority, and flag missing ownership."]
-    N3["Result for operator review"]
-    N0 --> N1 --> N2 --> N3
+    A["Incident export JSON"]
+    B["Drop resolved incidents and sort by priority and ID"]
+    C{"Owner present?"}
+    D["Keep named owner"]
+    E["Mark unassigned"]
+    A --> B --> C
+    C -->|Yes| D
+    C -->|No| E
 ```
 
 ## Operational boundaries
