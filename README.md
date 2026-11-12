@@ -11,3 +11,7 @@ Save the following as `incidents.json`, then run `python3 assistant.py incidents
 ```
 
 The result contains `INC-1`, priority `1`, and owner `unassigned`. The tool reads local JSON and makes no changes to incident records.
+
+## Local verification
+
+Run `make verify` with Make and Python 3 installed. The target runs the documented sample through the project CLI.
