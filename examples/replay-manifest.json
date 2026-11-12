@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Demo 1",
+    "args": [
+      "assistant.py",
+      "example.json"
+    ],
+    "expected": "examples/Demo 1.stdout.txt"
+  }
+]
