@@ -1,26 +1,12 @@
 # On-call Handoff Assistant
 
-Build a priority-ordered handoff list from an exported incident list. Resolved incidents are omitted and missing owners are marked `unassigned`. Lower priority numbers appear first.
-
-## Run
-
-Save the following as `incidents.json`, then run `python3 assistant.py incidents.json`.
-
-```json
-[{"id":"INC-1","priority":1,"status":"open"},{"id":"INC-2","priority":2,"status":"resolved","owner":"Platform"}]
-```
-
-The result contains `INC-1`, priority `1`, and owner `unassigned`. The tool reads local JSON and makes no changes to incident records.
-
-## Local verification
-
-Run `make verify` with Make and Python 3 installed. The target runs the documented sample through the project CLI.
-
-## Business problem
-
 Shift transitions can lose unresolved incidents or ownership information. The incoming responder needs an ordered handoff with unassigned work called out.
 
-## Project walkthrough
+## What I built
+
+I built a shift handoff CLI that removes resolved incidents, sorts the remaining work by priority and ID, and marks missing owners as unassigned.
+
+## How it works
 
 ```mermaid
 flowchart LR
@@ -34,41 +20,39 @@ flowchart LR
     C -->|No| E
 ```
 
-[Architecture and data flow](docs/ARCHITECTURE.md) · [Business problem, demo, and verification](docs/CASE_STUDY.md)
+[Architecture](docs/ARCHITECTURE.md) · [Decision rules and source](docs/RULES.md)
+
+## Tools used
+
+| Tool | Role in this repository |
+| --- | --- |
+| Python | [assistant.py](assistant.py) implements the CLI and decision rules. Uses `argparse` to parse command-line options, `json` to read or write structured records, `pathlib` to read local files. |
+| Make | Runs the documented example and the local `unittest` suite. |
+| Python replay runner | Compares actual stdout with the checked-in baseline fixtures. |
+| Ruff and Bandit | Developer lint and static security checks through `make check`. |
 
 ## Run the project
 
-### Local setup
-
-Run `make verify` with Python 3 and Make installed.
-
-### CLI usage
+Use Python 3.10+ and Make. From the repository root:
 
 ```sh
 python3 assistant.py example.json
 ```
 
-### Replay usage
+The fixture keeps INC-1 with priority 1 and highlights that it needs an owner. [Full expected output](examples/Demo%201.stdout.txt)
 
-Run `make replay` to replay the checked-in inputs. The runner compares stdout with the baseline, reports differences, and exits nonzero on regression.
+## Verify the project
 
-[Replay cases](examples/replay-manifest.json) · [Generated report](reports/replay.md) · [Rule implementation](docs/RULES.md)
+```sh
+make verify
+make replay
+```
 
-### Run tests
+`make replay` checks the recorded cases and exits nonzero if the output changes.
+See the [developer guide](docs/DEVELOPMENT.md) for the pinned lint and security tools.
 
-[Verification report](reports/verification.md) · [Business problem, sample behavior, and limitations](docs/CASE_STUDY.md)
+## Operating limits
 
+The project reads a local export and does not reassign or update incidents in a ticketing system.
 
-### Limitations
-
-The verification report covers the bundled local examples. See the [case study](docs/CASE_STUDY.md) for project-specific assumptions and operating limits.
-
-## Development and security
-
-See the [developer setup, tool roles, and security checks](docs/DEVELOPMENT.md).
-
-[Local check results](reports/devsecops.md)
-
-## Runbook
-
-[Run, verify, and troubleshoot this project](docs/RUNBOOK.md)
+[Case study](docs/CASE_STUDY.md) · [Operator runbook](docs/RUNBOOK.md) · [Verification report](reports/verification.md)
