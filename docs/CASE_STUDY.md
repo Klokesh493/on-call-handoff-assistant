@@ -2,7 +2,7 @@
 
 ## Business problem
 
-Build a priority-ordered handoff list from an exported incident list. Resolved incidents are omitted and missing owners are marked `unassigned`. Lower priority numbers appear first.
+Shift transitions can lose unresolved incidents or ownership information. The incoming responder needs an ordered handoff with unassigned work called out.
 
 ## Reproduce the workflow
 

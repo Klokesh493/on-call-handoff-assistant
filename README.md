@@ -16,6 +16,10 @@ The result contains `INC-1`, priority `1`, and owner `unassigned`. The tool read
 
 Run `make verify` with Make and Python 3 installed. The target runs the documented sample through the project CLI.
 
+## Business problem
+
+Shift transitions can lose unresolved incidents or ownership information. The incoming responder needs an ordered handoff with unassigned work called out.
+
 ## Project walkthrough
 
 ```mermaid
